@@ -7,7 +7,7 @@ export async function POST({ request }) {
     return new Response(JSON.stringify({ error: 'Missing spell name' }), { status: 400 })
   }
 
-  const prompt = `Describe a fantasy TTRPG spell called "${spellName}". Keep your description a single sentence but evocative to encourage player agency and creativity. The spells should be whimsical and silly, taking the most ridiculous aspects of the name into account. The description should be suitable for a game like Troika, where spells are often humorous and bizarre.`
+  const prompt = `Describe a fantasy TTRPG spell called "${spellName}". Keep your description a single short sentence, leaving it open to player agency and creativity. The description should be suitable for a game like Mörk Borg, where spells are often humorous and bizarre.`
 
   const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',

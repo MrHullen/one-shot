@@ -243,12 +243,17 @@ export async function getSpell() {
       break
   }
 
+  return name
+}
+
+export async function getSpellDescription(spellName) {
   const response = await fetch('ai/api', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ spellName: name }),
+    body: JSON.stringify({ spellName: spellName }),
   })
 
   const { description } = await response.json()
+
   return description
 }
