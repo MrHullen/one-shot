@@ -208,7 +208,7 @@ function getRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
-export async function getSpell() {
+export function getSpell() {
   const quality = getRandom(qualities)
   const effect = getRandom(effects)
   const element = getRandom(elements)
@@ -247,13 +247,15 @@ export async function getSpell() {
 }
 
 export async function getSpellDescription(spellName) {
-  const response = await fetch('ai/api', {
+  const response = await fetch('ai/api/spell-description', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ spellName: spellName }),
   })
 
-  const { description } = await response.json()
+  let { description } = await response.json()
+
+  description = description.replace(/^"|"$/g, '')
 
   return description
 }

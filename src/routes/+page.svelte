@@ -1,11 +1,37 @@
 <script>
   import Header from '$lib/Header.svelte'
   import { getSpell, getSpellDescription } from '$lib/spells.js'
-  import { getPotion } from '$lib/potions.js'
+  import { getPotion, getPotionDescription } from '$lib/potions.js'
 
-  let spellName = ''
-  let spellDescription = ''
-  let potion = ''
+  let counter = 0
+  let spell = {
+    name: '',
+    description: '',
+  }
+  let potion = {
+    name: '',
+    description: '',
+  }
+
+  let spellList = []
+  let potionList = []
+
+  // function startIncrementing() {
+  //   // Reset counter each time it starts
+  //   counter = 0
+
+  //   // Set an interval to run every 1000 milliseconds (1 second)
+  //   intervalId = setInterval(() => {
+  //     // Check if the counter has reached the maximum value (5)
+  //     if (counter < 5) {
+  //       // Increment the counter
+  //       counter++
+  //     } else {
+  //       // If counter reaches 5, clear the interval to stop incrementing
+  //       clearInterval(intervalId)
+  //     }
+  //   }, 1000)
+  // }
 </script>
 
 <Header />
@@ -13,58 +39,61 @@
 <main class="content section">
   <div class="columns">
     <div class="column">
-      <div class="box">
-        <p class="has-text-weight-bold">Generated Spell:</p>
-        <p>{spellName}</p>
-        {#if spellDescription}
-          <p class="has-text-weight-bold">Description:</p>
-          <p>{spellDescription}</p>
-        {/if}
-      </div>
-      <div class="box">
-        <p class="has-text-weight-bold">Instructions:</p>
-        <ul>
-          <li>Click the button below to generate a random spell.</li>
-          <li>Each click will produce a new spell description.</li>
-          <li>Use the generated spell in your tabletop RPG sessions!</li>
-        </ul>
-
-        <button
-          class="button is-primary"
-          on:click={async () => {
-            spellName = 'Channelling...'
-            spellDescription
-            spellName = await getSpell()
-          }}>Discover Spell Name</button>
-        <button
-          class="button is-primary"
-          on:click={async () => {
-            spellDescription = 'Channelling...'
-            spellDescription = await getSpellDescription(spellName)
-          }}>Discover Spell Effect</button>
-      </div>
-
-      <div class="column">
+      {#each spellList as spell}
         <div class="box">
-          <p class="has-text-weight-bold">Brewed Potion:</p>
-          <p>{potion}</p>
-        </div>
-        <div class="box">
-          <p class="has-text-weight-bold">Instructions:</p>
-          <ul>
-            <li>Click the button below to generate a random potion.</li>
-            <li>Each click will produce a new potion description.</li>
-            <li>Use the generated potion in your tabletop RPG sessions!</li>
-          </ul>
+          {#if counter > 0 && counter < 5}
+            <progress class="progress is-primary" max="100">15%</progress>
+          {:else}
+            <p class="has-text-weight-bold">{spell.name}</p>
+          {/if}
 
-          <button
-            class="button is-primary"
-            on:click={async () => {
-              potion = 'Brewing...'
-              potion = await getPotion()
-            }}>Generate Potion</button>
+          {#if spell.description}
+            <p>{spell.description}</p>
+          {:else}
+            <button
+              class="button is-info"
+              on:click={async () => {
+                spell.description = 'Channelling...'
+                spell.description = await getSpellDescription(spell.name)
+              }}>Discover Spell Effect</button>
+          {/if}
         </div>
-      </div>
+      {/each}
+      <button
+        class="button is-success"
+        on:click={async () => {
+          spell.name = ''
+          spell.description = ''
+          // startIncrementing()
+          spell.name = getSpell()
+          spellList = [...spellList, { ...spell }]
+        }}>Discover Spell Name</button>
+    </div>
+
+    <div class="column">
+      {#each potionList as potion}
+        <div class="box">
+          <p class="has-text-weight-bold">{potion.name}</p>
+          {#if potion.description}
+            <p>{potion.description}</p>
+          {:else}
+            <button
+              class="button is-info"
+              on:click={async () => {
+                potion.description = 'Brewing...'
+                potion.description = await getPotionDescription(potion.name)
+              }}>Discover Potion Effect</button>
+          {/if}
+        </div>
+      {/each}
+      <button
+        class="button is-primary"
+        on:click={async () => {
+          potion.name = getPotion()
+          potion.description = ''
+          // startIncrementing()
+          potionList = [...potionList, { ...potion }]
+        }}>Generate Potion</button>
     </div>
   </div>
 </main>

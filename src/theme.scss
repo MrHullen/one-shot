@@ -12,8 +12,6 @@ $text-color: #252323;
 
 // Font variables - change these to affect the text
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-$primary-font: '"Roboto", sans-serif';
-
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-$title-font: '"Pacifico", cursive';
+@import url('https://fonts.googleapis.com/css2?family=Bellefair&family=Uncial+Antiqua&display=swap');
+$primary-font: '"Bellefair", serif';
+$title-font: '"Uncial Antiqua", serif';

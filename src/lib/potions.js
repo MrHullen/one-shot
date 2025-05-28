@@ -656,3 +656,17 @@ export function getPotion() {
 
   return name
 }
+
+export async function getPotionDescription(potionName) {
+  const response = await fetch('ai/api/potion-description', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ potionName: potionName }),
+  })
+
+  let { description } = await response.json()
+
+  description = description.replace(/^"|"$/g, '')
+
+  return description
+}
