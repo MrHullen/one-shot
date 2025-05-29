@@ -1,103 +1,70 @@
 <script>
   import Header from '$lib/Header.svelte'
-  import { getSpell, getSpellDescription } from '$lib/spells.js'
-  import { getPotion, getPotionDescription } from '$lib/potions.js'
+  import Spells from '$lib/Spells.svelte'
+  import Potions from '$lib/Potions.svelte'
+  import Footer from '$lib/Footer.svelte'
+  import { onMount } from 'svelte'
 
-  let counter = 0
-  let spell = {
-    name: '',
-    description: '',
+  let character = {
+    name: 'Bob the Alchemist',
+    profession: 'Barmaid',
+    spellList: [],
+    potionList: [],
   }
-  let potion = {
-    name: '',
-    description: '',
+
+  function saveToLocal() {
+    let data = JSON.stringify(character)
+    localStorage.setItem('character', data)
   }
 
-  let spellList = []
-  let potionList = []
+  function loadFromLocal() {
+    if (localStorage.getItem('character')) {
+      let data = localStorage.getItem('character')
+      character = JSON.parse(data)
+    } else {
+      alert('No character data found in local storage.')
+    }
+  }
 
-  // function startIncrementing() {
-  //   // Reset counter each time it starts
-  //   counter = 0
+  function clearLocal() {
+    if (!confirm('Are you sure you want to delete your character?')) return
+    localStorage.clear()
+    character = {
+      name: 'Bob the Alchemist',
+      profession: 'Barmaid',
+      spellList: [],
+      potionList: [],
+    }
+  }
 
-  //   // Set an interval to run every 1000 milliseconds (1 second)
-  //   intervalId = setInterval(() => {
-  //     // Check if the counter has reached the maximum value (5)
-  //     if (counter < 5) {
-  //       // Increment the counter
-  //       counter++
-  //     } else {
-  //       // If counter reaches 5, clear the interval to stop incrementing
-  //       clearInterval(intervalId)
-  //     }
-  //   }, 1000)
-  // }
+  onMount(() => {
+    if (localStorage.getItem('character')) {
+      loadFromLocal()
+    }
+  })
 </script>
 
-<Header />
+<Header bind:name={character.name} bind:profession={character.profession} />
 
 <main class="content section">
-  <div class="columns">
+  <div class="columns is-8">
     <div class="column">
-      {#each spellList as spell}
-        <div class="box">
-          {#if counter > 0 && counter < 5}
-            <progress class="progress is-primary" max="100">15%</progress>
-          {:else}
-            <p class="has-text-weight-bold">{spell.name}</p>
-          {/if}
-
-          {#if spell.description}
-            <p>{spell.description}</p>
-          {:else}
-            <button
-              class="button is-info"
-              on:click={async () => {
-                spell.description = 'Channelling...'
-                spell.description = await getSpellDescription(spell.name)
-              }}>Discover Spell Effect</button>
-          {/if}
-        </div>
-      {/each}
-      <button
-        class="button is-success"
-        on:click={async () => {
-          spell.name = ''
-          spell.description = ''
-          // startIncrementing()
-          spell.name = getSpell()
-          spellList = [...spellList, { ...spell }]
-        }}>Discover Spell Name</button>
+      <div class="box">
+        <Spells bind:spellList={character.spellList} />
+      </div>
     </div>
-
     <div class="column">
-      {#each potionList as potion}
-        <div class="box">
-          <p class="has-text-weight-bold">{potion.name}</p>
-          {#if potion.description}
-            <p>{potion.description}</p>
-          {:else}
-            <button
-              class="button is-info"
-              on:click={async () => {
-                potion.description = 'Brewing...'
-                potion.description = await getPotionDescription(potion.name)
-              }}>Discover Potion Effect</button>
-          {/if}
-        </div>
-      {/each}
-      <button
-        class="button is-primary"
-        on:click={async () => {
-          potion.name = getPotion()
-          potion.description = ''
-          // startIncrementing()
-          potionList = [...potionList, { ...potion }]
-        }}>Generate Potion</button>
+      <div class="box">
+        <Potions bind:potionList={character.potionList} />
+      </div>
     </div>
+  </div>
+
+  <div class="buttons">
+    <button class="button is-primary" on:click={saveToLocal}>Save Character</button>
+    <button class="button is-secondary" on:click={loadFromLocal}>Load Character</button>
+    <button class="button is-danger" on:click={clearLocal}>Delete Character</button>
   </div>
 </main>
 
-<footer class="footer">
-  <p class="has-text-centered">&copy; Dave Hullen 2025</p>
-</footer>
+<Footer />

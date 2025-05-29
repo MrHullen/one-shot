@@ -255,7 +255,7 @@ export async function getSpellDescription(spellName) {
 
   let { description } = await response.json()
 
-  description = description.replace(/^"|"$/g, '')
+  // description = description.replace(/^"|"$/g, '')
 
   return description
 }
