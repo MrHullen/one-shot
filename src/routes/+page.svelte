@@ -18,7 +18,7 @@
 <Header />
 
 <main class="content section">
-  <button on:click={newCharacter}>New Character</button>
+  <!-- <button on:click={newCharacter}>New Character</button> -->
   <div class="columns box">
     {#each character.stats as stat}
       <div class="column has-text-centered has-text-weight-bold">
