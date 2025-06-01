@@ -23,6 +23,6 @@ import { character } from '$lib/character.svelte.js'
 
 <div class="buttons">
   <button class="button is-primary" on:click={saveToLocal}>Save Character</button>
-  <button class="button is-secondary" on:click={loadFromLocal}>Load Character</button>
+  <!-- <button class="button is-secondary" on:click={loadFromLocal}>Load Character</button> -->
   <button class="button is-danger" on:click={clearLocal}>Delete Character</button>
 </div>
