@@ -31,9 +31,9 @@
 {#each character.spellList as spell, index}
   <div class="notification">
     {#if counter > 0 && index == character.spellList.length - 1}
-      <progress class="progress is-primary" max="400" value="{counter}">15%</progress>
+      <progress class="progress is-primary" max="400" value={counter}>15%</progress>
     {:else}
-      <button class="delete" on:click={() => character.spellList = character.spellList.filter((_, i) => i !== index)}></button>
+      <button class="delete" on:click={() => (character.spellList = character.spellList.filter((_, i) => i !== index))}></button>
       <p class="has-text-weight-bold">{spell.name}</p>
       {#if spell.description}
         <p>{spell.description}</p>
@@ -46,7 +46,6 @@
           }}>Meditate on Spell Effect</button>
       {/if}
     {/if}
-
   </div>
 {/each}
 

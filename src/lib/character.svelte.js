@@ -1,6 +1,7 @@
 export const character = $state({
   name: 'Bob the Alchemist',
   profession: 'barmaid',
+  gearList: [],
   spellList: [],
   potionList: [],
   stats: [
@@ -188,3 +189,57 @@ export const character = $state({
     },
   ],
 })
+
+export function setCharacter(characterData) {
+  character.name = characterData.name || 'Bob the Alchemist'
+  character.profession = characterData.profession || 'barmaid'
+  character.gearList = characterData.gearList || []
+  character.spellList = characterData.spellList || []
+  character.potionList = characterData.potionList || []
+  character.stats = characterData.stats || [
+    {
+      name: 'Strength',
+      description: 'A measure of physical power and ability to exert force.',
+      value: 0,
+    },
+    {
+      name: 'Dexterity',
+      description: 'A measure of agility, reflexes, and balance.',
+      value: 0,
+    },
+    {
+      name: 'Constitution',
+      description: 'A measure of health, stamina, and vital force.',
+      value: 0,
+    },
+    {
+      name: 'Intelligence',
+      description: 'A measure of mental acuity, information retention, and analytical skill.',
+      value: 0,
+    },
+    {
+      name: 'Wisdom',
+      description: 'A measure of perception, insight, and intuition.',
+      value: 0,
+    },
+    {
+      name: 'Charisma',
+      description: 'A measure of personal magnetism, persuasiveness, and leadership ability.',
+      value: 0,
+    },
+  ]
+}
+
+export function resetCharacter() {
+  character.name = 'Bob the Alchemist'
+  character.profession = 'barmaid'
+  character.gearList = []
+  character.spellList = []
+  character.potionList = []
+  character.stats.forEach(stat => {
+    stat.value = Math.floor(Math.random() * 6) + 1 + Math.floor(Math.random() * 6) + 1 + (stat.name === 'Luck' ? 7 : 12)
+  })
+  character.skills.forEach(skill => {
+    skill.value = 0
+  })
+}
