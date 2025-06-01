@@ -1,16 +1,13 @@
 <script>
-  export let name
-  export let profession
-
-  let contenteditable = true
+  import { character } from '$lib/character.svelte.js'
 </script>
 
 <header class="hero is-primary">
   <div class="hero-body">
-    <input class="title" bind:value={name}>
+    <input class="title" bind:value={character.name} />
     <div class="subtitle">
       <span>A wizard's apprentice, but formerly a</span>
-      <input class="subtitle" bind:value={profession}>
+      <input class="subtitle" bind:value={character.profession.name} />
     </div>
   </div>
 </header>
@@ -21,6 +18,4 @@
     border: none;
     width: fit-content;
   }
-
-
 </style>

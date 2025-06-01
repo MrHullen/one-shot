@@ -1,12 +1,12 @@
 <script>
-  import { getPotion, getPotionDescription } from '$lib/potions.js'
+  import { character } from '$lib/character.svelte.js'
+  import { getPotion, getPotionDescription } from './potions.js'
 
   let counter = 0
   let potion = {
     name: '',
     description: '',
   }
-  export let potionList = []
 
   function addPotion() {
     potion.name = ''
@@ -22,15 +22,15 @@
       }
     }, 10)
     potion.name = getPotion()
-    potionList = [...potionList, { ...potion }]
+    character.potionList = [...character.potionList, { ...potion }]
   }
 </script>
 
 <h2 class="title">Potion Bandolier</h2>
 
-{#each potionList as potion, index}
+{#each character.potionList as potion, index}
   <div class="notification">
-    {#if counter > 0 && index == potionList.length - 1}
+    {#if counter > 0 && index == character.potionList.length - 1}
     <progress class="progress is-primary" max="400" value="{counter}">15%</progress>
     {:else}
       <button class="delete"></button>
@@ -38,6 +38,7 @@
       {#if potion.description}
         <p>{potion.description}</p>
       {:else}
+      <button class="delete" on:click={() => character.potionList = character.potionList.filter((_, i) => i !== index)}></button>
         <button
           class="button is-info"
           on:click={async () => {
@@ -50,6 +51,6 @@
   </div>
 {/each}
 
-{#if potionList.length < 3}
+{#if character.potionList.length < 3}
   <button class="button is-success" on:click={addPotion}>Brew New Potion</button>
 {/if}
