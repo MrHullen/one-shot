@@ -5,15 +5,21 @@
   import Gear from '$lib/parts/Gear.svelte'
   import Spells from '$lib/parts/Spells.svelte'
   import Potions from '$lib/parts/Potions.svelte'
-  import Persistence from '$lib/parts/Persistence.svelte'
   import Footer from '$lib/parts/Footer.svelte'
   import { onMount } from 'svelte'
-
-  import { character, setCharacter } from '$lib/character.svelte.js'
+  import { user } from '$lib/state.svelte.js'
+  import { getCharacter } from '$lib/data.js'
 
   onMount(() => {
-    if (localStorage.getItem('character')) {
-      setCharacter(JSON.parse(localStorage.getItem('character')))
+    if (localStorage.getItem('user')) {
+      let data = JSON.parse(localStorage.getItem('user'))
+      console.log('Loading user from localStorage:', data)
+      user.uid = data.uid
+      user.email = data.email
+      user.displayName = data.displayName
+      user.photoURL = data.photoURL
+      console.log('User loaded from localStorage:', user)
+      getCharacter(data.uid)
     }
   })
 </script>
@@ -21,32 +27,24 @@
 <Header />
 
 <main class="content section">
-
   <Stats />
-  
+
   <Skills />
 
   <Gear />
-  
-  {#each character.profession.items as item}
-    <div class="notification">
-      <p class="has-text-weight-bold">{item}</p>
-    </div>
-  {/each}
+
   <div class="columns is-8">
     <div class="column">
       <div class="box">
-        <Spells bind:spellList={character.spellList} />
+        <Spells />
       </div>
     </div>
     <div class="column">
       <div class="box">
-        <Potions bind:potionList={character.potionList} />
+        <Potions />
       </div>
     </div>
   </div>
-
-  <Persistence />
 </main>
 
 <Footer />

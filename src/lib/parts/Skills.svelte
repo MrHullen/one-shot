@@ -1,5 +1,5 @@
 <script>
-  import { character } from '$lib/character.svelte.js'
+  import { character } from '$lib/state.svelte.js'
 </script>
 
 <section class="section box">

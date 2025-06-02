@@ -1,26 +1,40 @@
+export const user = $state({
+  uid: null,
+  email: null,
+  displayName: null,
+  photoURL: null,
+})
+
+function getRandomStats() {
+  const stamina = Math.floor(Math.random() * 6) + 1 + Math.floor(Math.random() * 6) + 1 + 12
+  const luck = Math.floor(Math.random() * 6) + 1 + 7
+  const pluck = 20 - luck
+  return [
+    {
+      name: 'Stamina',
+      description: 'The health, fitness and all-round vitality of a character is defined by their stamina. The higher the better. When a character or enemy runs out of stamina in combat, they risk serious injury and are at the mercy of their opponent.',
+      value: stamina,
+    },
+    {
+      name: 'Luck',
+      description: "A character's destiny and fate are represented by luck. At any time during a game session, the games master can ask a character to try their luck to see if things go their way.",
+      value: luck,
+    },
+    {
+      name: 'Pluck',
+      description: "Pluck is a measure of how well a character deals with the stressful, horrifying or terrifying. The higher the value of pluck, the more resilient the character is. They say that the luckiest people are so used to things going their way that they don't know how to deal with the harsh miseries everyone else has to put up with.",
+      value: pluck,
+    },
+  ]
+}
+
 export const character = $state({
   name: 'Bob the Alchemist',
   profession: 'barmaid',
   gearList: [],
   spellList: [],
   potionList: [],
-  stats: [
-    {
-      name: 'Stamina',
-      description: 'The health, fitness and all-round vitality of a character is defined by their stamina. The higher the better. When a character or enemy runs out of stamina in combat, they risk serious injury and are at the mercy of their opponent.',
-      value: Math.floor(Math.random() * 6) + 1 + Math.floor(Math.random() * 6) + 1 + 12,
-    },
-    {
-      name: 'Luck',
-      description: "A character's destiny and fate are represented by luck. At any time during a game session, the games master can ask a character to try their luck to see if things go their way.",
-      value: Math.floor(Math.random() * 6) + 1 + 7,
-    },
-    {
-      name: 'Pluck',
-      description: "Pluck is a measure of how well a character deals with the stressful, horrifying or terrifying. The higher the value of pluck, the more resilient the character is. They say that the luckiest people are so used to things going their way that they don't know how to deal with the harsh miseries everyone else has to put up with.",
-      value: 0,
-    },
-  ],
+  stats: getRandomStats(),
   skills: [
     {
       name: 'Appraise',
@@ -190,56 +204,14 @@ export const character = $state({
   ],
 })
 
-export function setCharacter(characterData) {
-  character.name = characterData.name || 'Bob the Alchemist'
-  character.profession = characterData.profession || 'barmaid'
-  character.gearList = characterData.gearList || []
-  character.spellList = characterData.spellList || []
-  character.potionList = characterData.potionList || []
-  character.stats = characterData.stats || [
-    {
-      name: 'Strength',
-      description: 'A measure of physical power and ability to exert force.',
-      value: 0,
-    },
-    {
-      name: 'Dexterity',
-      description: 'A measure of agility, reflexes, and balance.',
-      value: 0,
-    },
-    {
-      name: 'Constitution',
-      description: 'A measure of health, stamina, and vital force.',
-      value: 0,
-    },
-    {
-      name: 'Intelligence',
-      description: 'A measure of mental acuity, information retention, and analytical skill.',
-      value: 0,
-    },
-    {
-      name: 'Wisdom',
-      description: 'A measure of perception, insight, and intuition.',
-      value: 0,
-    },
-    {
-      name: 'Charisma',
-      description: 'A measure of personal magnetism, persuasiveness, and leadership ability.',
-      value: 0,
-    },
-  ]
-}
-
 export function resetCharacter() {
   character.name = 'Bob the Alchemist'
   character.profession = 'barmaid'
   character.gearList = []
   character.spellList = []
   character.potionList = []
-  character.stats.forEach(stat => {
-    stat.value = Math.floor(Math.random() * 6) + 1 + Math.floor(Math.random() * 6) + 1 + (stat.name === 'Luck' ? 7 : 12)
-  })
-  character.skills.forEach(skill => {
+  character.stats = getRandomStats()
+  character.skills.forEach((skill) => {
     skill.value = 0
   })
 }

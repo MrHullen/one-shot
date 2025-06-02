@@ -666,7 +666,7 @@ export async function getPotionDescription(potionName) {
 
   let { description } = await response.json()
 
-  description = description.replace(/^"|"$/g, '')
+  // description = description.replace(/^"|"$/g, '')
 
   return description
 }

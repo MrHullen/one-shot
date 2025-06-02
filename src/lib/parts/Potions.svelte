@@ -1,5 +1,5 @@
 <script>
-  import { character } from '$lib/character.svelte.js'
+  import { character } from '$lib/state.svelte.js'
   import { getPotion, getPotionDescription } from './potions.js'
 
   let counter = 0
