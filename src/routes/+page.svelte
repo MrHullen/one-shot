@@ -2,6 +2,7 @@
   import Header from '$lib/parts/Header.svelte'
   import Stats from '$lib/parts/Stats.svelte'
   import Skills from '$lib/parts/Skills.svelte'
+  import Notes from '$lib/parts/Notes.svelte'
   import Gear from '$lib/parts/Gear.svelte'
   import Spells from '$lib/parts/Spells.svelte'
   import Potions from '$lib/parts/Potions.svelte'
@@ -27,22 +28,27 @@
 <Header />
 
 <main class="content section">
-  <Stats />
+
+  <div class="columns">
+    <div class="column is-one-third">
+      <Stats />
+    </div>
+    <div class="column">
+      <Notes />
+    </div>
+  </div>
 
   <Skills />
 
-  <Gear />
-
   <div class="columns is-8">
     <div class="column">
-      <div class="box">
-        <Spells />
-      </div>
+      <Gear />
     </div>
     <div class="column">
-      <div class="box">
-        <Potions />
-      </div>
+      <Spells />
+    </div>
+    <div class="column">
+      <Potions />
     </div>
   </div>
 </main>

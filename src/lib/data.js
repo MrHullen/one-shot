@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore'
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
-import { user, character } from '$lib/state.svelte.js'
+import { user, character, resetCharacter } from '$lib/state.svelte.js'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyC9vbal_acmX4YkVhF2DNgvATAn5hSvEfE',
@@ -39,6 +39,7 @@ export async function getCharacter(uid) {
 
     character.name = characterData.name
     character.profession = characterData.profession
+    character.notes = characterData.notes
     character.gearList = characterData.gearList
     character.spellList = characterData.spellList
     character.potionList = characterData.potionList
@@ -69,6 +70,10 @@ export async function logout() {
   user.email = null
   user.displayName = null
   user.photoURL = null
+
+  resetCharacter()
+
+  localStorage.removeItem('user')
 
   await signOut(auth)
 }

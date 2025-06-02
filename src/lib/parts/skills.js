@@ -1,4 +1,4 @@
-const skills = [
+let skills = [
   {
     "name": "Appraise",
     "description": "The character has a keen eye. Not only can they appraise items for their worth or providence, they can also assess other people to get a measure of their worth and their apparent trustworthiness.",
@@ -166,3 +166,4 @@ const skills = [
   }
 ]
 
+export default skills
