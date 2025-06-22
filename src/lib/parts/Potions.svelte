@@ -34,12 +34,11 @@
       {#if counter > 0 && index == character.potionList.length - 1}
         <progress class="progress is-primary" max="400" value={counter}>15%</progress>
       {:else}
-        <button class="delete"></button>
+        <button class="delete" on:click={() => (character.potionList = character.potionList.filter((_, i) => i !== index))}></button>
         <p class="has-text-weight-bold">{potion.name}</p>
         {#if potion.description}
           <p>{potion.description}</p>
         {:else}
-          <button class="delete" on:click={() => (character.potionList = character.potionList.filter((_, i) => i !== index))}></button>
           <button
             class="button is-info"
             on:click={async () => {
